@@ -1,5 +1,11 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {v4 as uuidV4} from 'uuid'
+// const postContact = createAsyncThunk('/user/addContact',
+//     async (user,contactUserId,name,thunkAPI)=>{
+//         const response = await contactAPI(user,contactUserId,name)
+//         return response;
+//     }    
+// )
 
 export const userSlice = createSlice({
     name:'user',
@@ -17,7 +23,7 @@ export const userSlice = createSlice({
         addContact:(state,action)=>{
             state.contacts=[...state.contacts,action.payload]
         }        
-    }
+    },
 
 })
 

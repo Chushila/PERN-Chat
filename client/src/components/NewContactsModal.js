@@ -1,23 +1,34 @@
 
 import React, { useRef } from 'react'
 import { Form, Modal, Button} from 'react-bootstrap'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import contactsAPI from '../api/contactsAPI';
 import { addContact } from './redux/Slices/UserSlice';
 
 export default function NewContactsModal({closeModal}) {
     const idRef = useRef();
     const nameRef = useRef();
     const dispatch = useDispatch();
+    const user = useSelector(state=>state.user.id)
 
-    function handleSubmit(e){
+   async function handleSubmit(e){
         e.preventDefault()
-        dispatch(addContact({id:idRef.current.value,name:nameRef.current.value}));
-        closeModal();
+        const data = await contactsAPI.addContact(user,idRef.current.value,nameRef.current.value);
+        console.log(data)
+        if(data){
+            dispatch(addContact({id:idRef.current.value,name:nameRef.current.value}))
+            closeModal();}
+        else{
+                document.getElementById('contactModal').innerHTML='User with that Id does not found';
+            }
+            ;
     }
+
+   
   return (
     <>
         <Modal.Header closeButton>Create Contact</Modal.Header>
-        <Modal.Body>
+        <Modal.Body id = "contactModal">
             <Form onSubmit = {handleSubmit}>
                 <Form.Group>
                     <Form.Label>Id</Form.Label>
