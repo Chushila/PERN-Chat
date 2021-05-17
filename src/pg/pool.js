@@ -1,8 +1,7 @@
-const dotenv = require('dotenv');
 
 const {Pool} = require('pg');
 
-dotenv.config();
+require('dotenv').config();
 
 const devConfig = {
   host: process.env.PG_HOST,
