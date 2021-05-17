@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
 
-const {Pool} = require(pg);
+const {Pool} = require('pg');
 
 dotenv.config();
 
@@ -20,6 +20,8 @@ const productionConfig = {
     rejectUnauthorized: false
   } // heroku addon
 };
-export const pool = new Pool(
+ const pool = new Pool(
   process.env.NODE_ENV === 'production' ? productionConfig : devConfig
 );
+
+module.exports = pool;

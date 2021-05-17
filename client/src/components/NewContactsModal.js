@@ -3,7 +3,7 @@ import React, { useRef } from 'react'
 import { Form, Modal, Button} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import contactsAPI from '../api/contactsAPI';
-import { addContact } from './redux/Slices/UserSlice';
+import {addContact} from './redux/Slices/UserSlice'
 
 export default function NewContactsModal({closeModal}) {
     const idRef = useRef();
@@ -13,15 +13,13 @@ export default function NewContactsModal({closeModal}) {
 
    async function handleSubmit(e){
         e.preventDefault()
-        const data = await contactsAPI.addContact(user,idRef.current.value,nameRef.current.value);
-        console.log(data)
-        if(data){
-            dispatch(addContact({id:idRef.current.value,name:nameRef.current.value}))
+        const data = await contactsAPI.addContact(user,idRef.current.value,nameRef.current.value)
+        if(data.status === 200){
+            dispatch(addContact({contact_user_id:idRef.current.value,name:nameRef.current.value}))
             closeModal();}
         else{
-                document.getElementById('contactModal').innerHTML='User with that Id does not found';
+                document.getElementById('contactModal').innerHTML='User with that id is not found';
             }
-            ;
     }
 
    

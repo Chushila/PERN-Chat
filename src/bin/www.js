@@ -4,20 +4,20 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../../app');
 var debug = require('debug')('messaging-app:server');
 var http = require('http');
-
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '5000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
+
 
 var server = http.createServer(app);
 
@@ -33,6 +33,7 @@ server.on('listening', onListening);
  * Normalize a port into a number, string, or false.
  */
 
+ const io = require('socket.io')(server)
 function normalizePort(val) {
   var port = parseInt(val, 10);
 
@@ -80,6 +81,27 @@ function onError(error) {
 /**
  * Event listener for HTTP server "listening" event.
  */
+
+
+io.on('connection',socket=>{
+   const id = socket.handshake.query.id;
+   
+   socket.join(id)
+
+   socket.on('send-message',({recipients,conversation}) =>{
+    recipients.forEach(recipient=>{
+      socket.broadcast.to(recipient.contact_user_id).emit('receive-message',{
+       conversation:conversation
+      })
+    })
+   })
+   socket.on('make-conversation',({recipients,conversationObj,name}) =>{
+    recipients.forEach(recipient=>{
+      socket.broadcast.to(recipient.contact_user_id).emit('new-conversation',{conversationObj,name})
+    })
+   })
+})
+
 
 function onListening() {
   var addr = server.address();

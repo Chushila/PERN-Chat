@@ -1,36 +1,34 @@
 
-import React, { useRef } from 'react'
-import {Container, Form, Button} from 'react-bootstrap'
+import React from 'react'
+import {Container, Button} from 'react-bootstrap'
 import { useCookies } from 'react-cookie';
 import { useDispatch } from 'react-redux';
-import {login, createNew} from './redux/Slices/UserSlice'
-
+import {createNew} from './redux/Slices/UserSlice'
+import {createUser} from '../api/userAPI'
+import {v4 as uuidV4} from 'uuid' 
 
 export default function Login() {
-    const idRef = useRef();
     const dispatch = useDispatch();
-    const [cookies,setCookie] = useCookies(['user'])
+    const [setCookie] = useCookies(['user'])
 
-    function hadleCookies(){
-        setCookie("user",idRef.current.value,{
+    function hadleCookies(id){
+        setCookie("user",id,{
             path:'/'
         })
     }
-    function handleSubmit (e){
-        e.preventDefault();
-        hadleCookies();
-        dispatch(login(idRef.current.value))
+
+    function guestSubmit (e){
+     const id  = uuidV4();
+      dispatch(createNew(id))
+      createUser(id)
+      hadleCookies(id);
     }
   return (
     <Container className = "align-items-center d-flex" style = {{height:'100vh'}}>
-        <Form className = "w-100" onSubmit = {handleSubmit}>
-            <Form.Group>
-                <Form.Label>Enter you Id</Form.Label>
-                <Form.Control type = 'text' ref = {idRef} required/>
-            </Form.Group>
-            <Button type = 'submit' className = "mr-2">Login</Button>
-            <Button variant = 'secondary' onClick = {()=>dispatch(createNew())} > Create A New Id </Button>
-        </Form>
+        
+            <Button className="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="http://localhost:5000/google/"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt ='googleLogo'/> Signup Using Google</Button>
+            <Button variant = 'secondary' onClick = {guestSubmit} > Sign in as a Guest </Button>
+       
     </Container>
   )
 }
