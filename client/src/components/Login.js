@@ -26,7 +26,7 @@ export default function Login() {
   return (
     <Container className = "align-items-center d-flex" style = {{height:'100vh'}}>
         
-            <Button className="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="http://localhost:5000/google/"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt ='googleLogo'/> Signup Using Google</Button>
+            <Button className="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="/google/"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt ='googleLogo'/> Signup Using Google</Button>
             <Button variant = 'secondary' onClick = {guestSubmit} > Sign in as a Guest </Button>
        
     </Container>
