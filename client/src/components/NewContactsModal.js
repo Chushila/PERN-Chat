@@ -18,7 +18,7 @@ export default function NewContactsModal({closeModal}) {
             dispatch(addContact({contact_user_id:idRef.current.value,name:nameRef.current.value}))
             closeModal();}
         else{
-                document.getElementById('contactModal').innerHTML='User with that id is not found';
+                document.getElementById('contactModal').innerHTML='User with that id does not exist';
             }
     }
 

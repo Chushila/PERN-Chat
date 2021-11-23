@@ -9,7 +9,7 @@ import {v4 as uuidV4} from 'uuid'
 
 export default function Login() {
     const dispatch = useDispatch();
-    const [setCookie] = useCookies(['user'])
+    const [Cookie,setCookie] = useCookies(['user'])
 
     function hadleCookies(id){
         setCookie("user",id,{
@@ -26,8 +26,8 @@ export default function Login() {
   return (
     <Container className = "align-items-center d-flex" style = {{height:'100vh'}}>
         
-            <Button className="btn btn-lg btn-google btn-block text-uppercase btn-outline" href="/google/"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt ='googleLogo'/> Signup Using Google</Button>
-            <Button variant = 'secondary' onClick = {guestSubmit} > Sign in as a Guest </Button>
+            <Button className="btn btn-lg btn-google btn-block text-uppercase btn-outline p-3" href="/google/"><img src="https://img.icons8.com/color/16/000000/google-logo.png" alt ='googleLogo'/> Signup Using Google</Button>
+            <Button variant = 'secondary' className = "btn btn-md m-1 p-2" onClick = {guestSubmit} > Sign in as a Guest </Button>
        
     </Container>
   )
